@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <!-- Header aligned to top -->
+    <RelativeLayout
+        android:id="@+id/header" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center" >
+        <TextView android:id="@+id/connectionMessage"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="20sp"
+                  android:text="@string/connectionSuccess" />
+    </RelativeLayout>
+    <!-- Footer aligned to bottom -->
+    <RelativeLayout 
+        android:id="@+id/footer" 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center" >
+        <LinearLayout android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+            <LinearLayout android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/keyboardBox"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@string/keyboardSelection" />
+                <CheckBox
+                    android:id="@+id/pointer"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@string/pointerSelection" />
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+                <Button android:id="@+id/prevBtn"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:text="@string/prev"
+                        android:onClick="previousSlide"/>
+                <Button android:id="@+id/nextBtn"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:text="@string/next"
+                        android:onClick="nextSlide"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <!--    Scrollable Item below header and above footer -->
+    <ScrollView
+        android:id="@+id/scrollableContents"
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" 
+        android:layout_above="@id/footer" 
+        android:background="#005" 
+        android:layout_below="@id/header" > 
+    </ScrollView>
+</RelativeLayout>
+

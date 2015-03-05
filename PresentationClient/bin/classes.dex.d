@@ -1,0 +1,27 @@
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes.dex : \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ActionScreen$1.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ActionScreen$2.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ActionScreen.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ActionTcpScreen$1.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ActionTcpScreen$2.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ActionTcpScreen.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\BuildConfig.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ConnectScreen$1.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ConnectScreen$ConnectToServerTask.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ConnectScreen.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ConnectTcpScreen$1.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ConnectTcpScreen$ConnectToServerTask.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\ConnectTcpScreen.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\IPresentClient.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\listener\AccelSensorListener.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\listener\PointerListener.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\R$attr.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\R$id.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\R$layout.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\R$string.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\R.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\tcp\PresentationClient.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\udp\PresentationUDPClient.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\udp\UDPClient.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\classes\com\danov\udp\utils\UDPUtils.class \
+C:\Users\x\Desktop\PresentationTool\PresentationClient\bin\dexedLibs\annotations-94882adf2eb2e31dba98f3ae5b7566cd.jar \

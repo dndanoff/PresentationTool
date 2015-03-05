@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PresentationTool</string>
+    <string name="serverLabel">Server Address</string>
+    <string name="serverName">localhost</string>
+    <string name="portLabel">Port Number</string>
+    <string name="serverPort">8080</string>
+    <string name="defaultPort">1991</string>
+    <string name="connectBtn">Connect!</string>
+    <string name="pointer_activity">Pointer</string>
+    <string name="connectionSuccess">Connection was successful</string>
+    <string name="keyboardSelection">Use buttons</string>
+    <string name="pointerSelection">Pointer</string>
+    <string name="prev">Prev</string>
+    <string name="next">Next</string>
+    <string name="errorMsg">Connection failed</string>
+    <string name="possibleFaults">Possible faults can be:</string>
+    <string name="fault1">Server not running</string>
+    <string name="fault2">No internet connection</string>
+    <string name="fault3">Wrong port or address</string>
+</resources>

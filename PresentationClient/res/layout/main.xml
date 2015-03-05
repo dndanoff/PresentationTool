@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="top"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+>
+    <TextView android:id="@+id/serverLabel"
+              android:textSize="20sp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/serverLabel" />
+    <EditText
+        android:id="@+id/serverName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/serverName"
+        android:inputType="text" />
+    <TextView android:id="@+id/portLabel"
+              android:textSize="20sp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/portLabel" />
+    <EditText
+        android:id="@+id/serverPort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/serverPort"
+        android:text="@string/defaultPort"
+        android:inputType="number" />
+    <Button android:id="@+id/connectBtn"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/connectBtn"
+            android:onClick="connectToServer"/>
+</LinearLayout>
+

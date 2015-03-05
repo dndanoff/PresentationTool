@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="top"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+>
+    <TextView android:id="@+id/errorMsg"
+              android:textSize="30sp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/errorMsg" />
+    <TextView android:id="@+id/possibleFaults"
+              android:textSize="20sp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/possibleFaults" />
+    <TextView android:id="@+id/fault1"
+              android:textSize="20sp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/fault1" />
+    <TextView android:id="@+id/fault2"
+              android:textSize="20sp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/fault2" />
+    <TextView android:id="@+id/fault3"
+              android:textSize="20sp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/fault3" />
+</LinearLayout>

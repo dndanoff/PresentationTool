@@ -1,0 +1,26 @@
+Please skip this tutorial if your device is not powered by MTK CPU.
+
+Please enable USB debugging on your Gigabyte GSmart Aku A1 Android, to do that go to Settings > Developer Options
+
+Download this driver to your computer (download link available at the end of this article), Extract using WinZIP or WinRAR, find a file "PdaNetA4150.exe" and launch it (Be sure to close all program).
+
+Choose your phone model (Gigabyte GSmart Aku A1 Android), Select "Others" foe unknown made in China mobile phones.
+
+Press the install button.
+
+Now connect your Gigabyte GSmart Aku A1 Android android mobile phone, there will be a popup message say your phone is now connected. Finish the installation.
+
+
+
+
+
+
+In order to Install MTK Based Mobile USB Driver, Follow the steps below (the next steps):
+
+    1. Download and extract attached PDAnet driver file in some folder on your PC
+    2. Go into that folder and run the "PdaNetA4150.exe" file
+    3.Select your phone/tablet manufacturer. Select "Others" for Chinese phones and tablets    
+    4.Hit "Install" in Windows Security dialog
+    5.Connect your phone when you see the dialog below    
+    6.You should see the following dialog now. Congratulations! Your PDAnet driver is installed. Click Finish on the dialog.
+
