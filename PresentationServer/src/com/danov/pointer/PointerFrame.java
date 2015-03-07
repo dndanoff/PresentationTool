@@ -48,7 +48,7 @@ public class PointerFrame extends JFrame {
     }
 
     public void getNewScreenCondition() {
-        if (!PointerUtils.uniformTranslucencySupported() && !dynamicContent) {
+        if (!PointerUtils.uniformTranslucencySupported() || !dynamicContent) {
             BufferedImage image = PointerUtils.captureScreen();
             imagePanel.setImg(image);
         }
