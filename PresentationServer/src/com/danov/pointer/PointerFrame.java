@@ -22,8 +22,10 @@ import javax.swing.KeyStroke;
 public class PointerFrame extends JFrame {
 
     private ImagePanel imagePanel;
+    private boolean dynamicContent;
 
-    public PointerFrame() {
+    public PointerFrame(boolean dynamicContent) {
+        this.dynamicContent = dynamicContent;
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setUndecorated(true);
 
@@ -32,7 +34,7 @@ public class PointerFrame extends JFrame {
         this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKeyStroke, "ESCAPE");
         this.getRootPane().getActionMap().put("ESCAPE", escapeAction);
 
-        if (PointerUtils.uniformTranslucencySupported()) {
+        if (PointerUtils.uniformTranslucencySupported() && dynamicContent) {
             this.setOpacity(0.30f);
             imagePanel = new ImagePanel();
         } else {
@@ -46,7 +48,7 @@ public class PointerFrame extends JFrame {
     }
 
     public void getNewScreenCondition() {
-        if (!PointerUtils.uniformTranslucencySupported()) {
+        if (!PointerUtils.uniformTranslucencySupported() && !dynamicContent) {
             BufferedImage image = PointerUtils.captureScreen();
             imagePanel.setImg(image);
         }

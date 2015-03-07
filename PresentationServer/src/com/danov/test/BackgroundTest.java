@@ -14,7 +14,7 @@ import com.danov.pointer.PointerFrame;
 public class BackgroundTest {
 
     public static void main(String[] args) throws InterruptedException {
-        PointerFrame frame = new PointerFrame();
+        PointerFrame frame = new PointerFrame(true);
         frame.setVisible(true);
         
         Thread.sleep(1000);

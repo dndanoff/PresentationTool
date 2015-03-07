@@ -50,6 +50,7 @@ public class PresentationUDPServerScreen extends javax.swing.JFrame {
         connectBtn.setEnabled(enabled);
         portNumberTextField.setEnabled(enabled);
         addressSelection.setEnabled(enabled);
+        dynamicCheckBox.setEnabled(enabled);
     }
 
     private void populateAvailableAddresses() {
@@ -90,6 +91,7 @@ public class PresentationUDPServerScreen extends javax.swing.JFrame {
         addressSelection = new javax.swing.JComboBox();
         selectionLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        dynamicCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Presentation Server");
@@ -129,6 +131,8 @@ public class PresentationUDPServerScreen extends javax.swing.JFrame {
             }
         });
 
+        dynamicCheckBox.setText("dynamic");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -140,23 +144,29 @@ public class PresentationUDPServerScreen extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(textAreaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(ipLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(portNumberLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(portNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(connectBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(ipLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(portNumberLabel))
+                                    .addComponent(addressSelection, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(dynamicCheckBox)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(portNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(connectBtn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(109, 109, 109)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(selectionLabel)
-                            .addComponent(addressSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(selectionLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,15 +174,18 @@ public class PresentationUDPServerScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(selectionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addressSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(portNumberLabel)
-                    .addComponent(connectBtn)
-                    .addComponent(portNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ipLabel)
-                    .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addressSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dynamicCheckBox))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(portNumberLabel)
+                        .addComponent(connectBtn)
+                        .addComponent(portNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ipLabel)
+                        .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textAreaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -184,17 +197,23 @@ public class PresentationUDPServerScreen extends javax.swing.JFrame {
 
     private void connectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBtnActionPerformed
         // TODO add your handling code here:
-        int port = Integer.parseInt(portNumberTextField.getText());
-        System.out.println("MultipleSocketServer starting....");
-        try {
-            server = new PresentationUDPServer(selectedAddress, port, 65507, messagesTextArea);
-            serverThread = new Thread(server);
-            serverThread.start();
-            enableInputs(false);
-        } catch (SocketException ex) {
-            Logger.getLogger(PresentationUDPServerScreen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AWTException ex) {
-            Logger.getLogger(PresentationUDPServerScreen.class.getName()).log(Level.SEVERE, null, ex);
+        if(portNumberTextField.getText() == null || portNumberTextField.getText().isEmpty()){
+            
+        }else{
+            int port = Integer.parseInt(portNumberTextField.getText());
+            System.out.println("MultipleSocketServer starting....");
+            try {
+                server = new PresentationUDPServer.Builder(port).address(selectedAddress)
+                                                                .buffer(65507).messagesTextArea(messagesTextArea)
+                                                                .dynamic(dynamicCheckBox.isSelected()).build();
+                serverThread = new Thread(server);
+                serverThread.start();
+                enableInputs(false);
+            } catch (SocketException ex) {
+                Logger.getLogger(PresentationUDPServerScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (AWTException ex) {
+                Logger.getLogger(PresentationUDPServerScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_connectBtnActionPerformed
 
@@ -261,6 +280,7 @@ public class PresentationUDPServerScreen extends javax.swing.JFrame {
     private javax.swing.JComboBox addressSelection;
     private javax.swing.JTextField addressTextField;
     private javax.swing.JButton connectBtn;
+    private javax.swing.JCheckBox dynamicCheckBox;
     private javax.swing.JLabel ipLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;

@@ -30,34 +30,16 @@ public class PresentationUDPServer extends UDPServer {
     private static final String START_POINTER = "pointer";
     private static final String CLEAR_POINTER = "clear";
 
-    private JTextArea messagesTextArea;
+    private final JTextArea messagesTextArea;
     private final PointerFrame pointerFrame;
     private final InputRobot robot;
 
-    public PresentationUDPServer(String address, int port, int buffer, JTextArea messagesTextArea) throws SocketException, AWTException {
-        super(address, port, buffer);
+    private PresentationUDPServer(Builder builder) throws SocketException, AWTException {
+        super(builder.address, builder.port, builder.buffer);
         robot = new InputRobot();
-        pointerFrame = new PointerFrame();
-        this.messagesTextArea = messagesTextArea;
+        pointerFrame = new PointerFrame(builder.dynamic);
+        this.messagesTextArea = builder.messagesTextArea;
         printMessage("Presentation Server started!");
-    }
-
-    public PresentationUDPServer(int port, int buffer) throws SocketException, AWTException {
-        super(port, buffer);
-        robot = new InputRobot();
-        pointerFrame = new PointerFrame();
-    }
-
-    public PresentationUDPServer(int port) throws SocketException, AWTException {
-        super(port);
-        robot = new InputRobot();
-        pointerFrame = new PointerFrame();
-    }
-
-    public PresentationUDPServer() throws SocketException, AWTException {
-        super();
-        robot = new InputRobot();
-        pointerFrame = new PointerFrame();
     }
 
     public void stop() {
@@ -100,7 +82,7 @@ public class PresentationUDPServer extends UDPServer {
         } else if (message.startsWith(POINT_PREFIX)) {
             String valueMessage = message.replace(POINT_PREFIX, "");
             String[] coordinates = valueMessage.split(",");
-            pointerFrame.paintDot(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]),Integer.parseInt(coordinates[2]),Integer.parseInt(coordinates[3]));
+            pointerFrame.paintDot(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), Integer.parseInt(coordinates[2]), Integer.parseInt(coordinates[3]));
             printMessage("Client " + incoming.getAddress() + " drew point[" + coordinates[0] + "," + coordinates[1] + "]!");
         } else if (START_POINTER.equals(message)) {
             pointerFrame.getNewScreenCondition();
@@ -128,6 +110,44 @@ public class PresentationUDPServer extends UDPServer {
 
     public InputRobot getRobot() {
         return robot;
+    }
+
+    public static class Builder {
+// Required parameters
+        private int port;
+// Optional parameters - initialized to default values
+        private String address = null;
+        private int buffer = -1;
+        private JTextArea messagesTextArea = null;
+        private boolean dynamic = false;
+
+        public Builder(int port) {
+            this.port = port;
+        }
+
+        public Builder address(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder dynamic(boolean dynamic) {
+            this.dynamic = dynamic;
+            return this;
+        }
+
+        public Builder buffer(int buffer) {
+            this.buffer = buffer;
+            return this;
+        }
+
+        public Builder messagesTextArea(JTextArea messagesTextArea) {
+            this.messagesTextArea = messagesTextArea;
+            return this;
+        }
+
+        public PresentationUDPServer build() throws SocketException, AWTException {
+            return new PresentationUDPServer(this);
+        }
     }
 
 }

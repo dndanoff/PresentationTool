@@ -20,37 +20,31 @@ import java.util.logging.Logger;
  */
 public abstract class UDPServer implements Runnable {
 
-    private int bufferSize; // in bytes
-    private int port;
+    private final int bufferSize; // in bytes
+    private final int port;
     private InetAddress address;
-    private DatagramSocket socket;
+    private final DatagramSocket socket;
     
     public UDPServer(String address, int port, int bufferSize) throws SocketException{
-        this.bufferSize = bufferSize;
         this.port = port;
+        
+        if(bufferSize > 0){
+            this.bufferSize = bufferSize;
+        }else{
+           this.bufferSize = 256;
+        }
+        
         if(address != null){
             try {
                 this.address = InetAddress.getByName(address);
             } catch (UnknownHostException ex) {
                 Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.socket = new DatagramSocket(port);
+            this.socket = new DatagramSocket(this.port);
         }else{
-            this.socket = new DatagramSocket(port);
+            this.socket = new DatagramSocket(this.port);
             this.address = socket.getInetAddress();
         }
-    }
-
-    public UDPServer(int port, int bufferSize) throws SocketException {
-        this(null, port, bufferSize);
-    }
-
-    public UDPServer(int port) throws SocketException {
-        this(null, port, 256);
-    }
-
-    public UDPServer() throws SocketException {
-        this(null, 1991, 256);
     }
 
     public void run() {

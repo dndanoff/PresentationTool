@@ -26,24 +26,22 @@ public class ServerDispatcher extends Thread {
     private static final String START_POINTER = "pointer";
     private static final String CLEAR_POINTER = "clear";
 
-    private JTextArea messagesTextArea;
+    private final JTextArea messagesTextArea;
+    private final boolean dynamic;
     private final PointerFrame pointerFrame;
     private static InputRobot robot;
 
     private final List<String> messageQueue;
     private final List<PresentationClient> clients;
 
-    public ServerDispatcher(JTextArea messagesTextArea) throws AWTException {
-        this.messagesTextArea = messagesTextArea;
-        this.pointerFrame = new PointerFrame();
+    private ServerDispatcher(Builder builder) throws AWTException {
+        this.messagesTextArea = builder.messagesTextArea;
+        this.dynamic = builder.dynamic;
+        this.pointerFrame = new PointerFrame(dynamic);
         robot = new InputRobot();
 
         messageQueue = Collections.synchronizedList(new ArrayList<String>());
         clients = Collections.synchronizedList(new ArrayList<PresentationClient>());
-    }
-
-    public ServerDispatcher() throws AWTException {
-        this(null);
     }
 
     /**
@@ -168,5 +166,26 @@ public class ServerDispatcher extends Thread {
         String message = (String) messageQueue.get(0);
         messageQueue.remove(0);
         return message;
+    }
+    
+    public static class Builder {
+// Required parameters - here they are missing
+// Optional parameters - initialized to default values
+        private JTextArea messagesTextArea = null;
+        private boolean dynamic = false;
+
+        public Builder dynamic(boolean dynamic) {
+            this.dynamic = dynamic;
+            return this;
+        }
+
+        public Builder messagesTextArea(JTextArea messagesTextArea) {
+            this.messagesTextArea = messagesTextArea;
+            return this;
+        }
+
+        public ServerDispatcher build() throws AWTException {
+            return new ServerDispatcher(this);
+        }
     }
 }

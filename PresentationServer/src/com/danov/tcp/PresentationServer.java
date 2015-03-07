@@ -6,11 +6,13 @@
 package com.danov.tcp;
 
 import com.danov.pointer.PointerFrame;
+import com.danov.udp.impl.PresentationUDPServer;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,19 +25,18 @@ import javax.swing.JTextArea;
 public class PresentationServer implements Runnable{
 
     private Integer port;
-    private String address;
-    private JTextArea textArea;
+    private final String address;
+    private final JTextArea textArea;
+    private final boolean dynamic;
     private static ServerSocket server;
     private static ServerDispatcher serverDispatcher;
     private static final int MAX_CLIENTS_COUNT = 5;
 
-    public PresentationServer(Integer port) {
-        this(port,"localhost",null);
-    }
-
-    public PresentationServer(Integer port, String address, JTextArea textArea) {
-        this.port = port;
-        this.textArea = textArea;
+    private PresentationServer(Builder builder) {
+        this.port = builder.port;
+        this.textArea = builder.messagesTextArea;
+        this.address = builder.address;
+        this.dynamic = builder.dynamic;
     }
     
     @Override
@@ -43,7 +44,7 @@ public class PresentationServer implements Runnable{
         // Start listening on the server socket 
         bindServerSocket();
         try {
-            serverDispatcher = new ServerDispatcher(textArea);
+            serverDispatcher = new ServerDispatcher.Builder().messagesTextArea(textArea).dynamic(dynamic).build();
             serverDispatcher.start();
             
             // Infinitely accept and handle client connections
@@ -112,6 +113,38 @@ public class PresentationServer implements Runnable{
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+    
+    public static class Builder {
+// Required parameters
+        private int port;
+// Optional parameters - initialized to default values
+        private String address = "localhost";
+        private JTextArea messagesTextArea = null;
+        private boolean dynamic = false;
+
+        public Builder(int port) {
+            this.port = port;
+        }
+
+        public Builder address(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder dynamic(boolean dynamic) {
+            this.dynamic = dynamic;
+            return this;
+        }
+
+        public Builder messagesTextArea(JTextArea messagesTextArea) {
+            this.messagesTextArea = messagesTextArea;
+            return this;
+        }
+
+        public PresentationServer build() {
+            return new PresentationServer(this);
+        }
     }
 
 }
