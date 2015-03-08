@@ -27,6 +27,7 @@ public class ImagePanel extends JPanel {
 
     public ImagePanel(String img) {
         this(new ImageIcon(img).getImage(), -1, -1);
+        this.dotSize = 50;
     }
 
     public ImagePanel(Image img) {
