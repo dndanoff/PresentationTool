@@ -5,8 +5,8 @@
  */
 package com.danov.udp.impl;
 
-import com.danov.pointer.PointerFrame;
-import com.danov.tcp.InputRobot;
+import com.danov.common.pointer.PointerFrame;
+import com.danov.common.robot.InputRobot;
 import com.danov.udp.UDPServer;
 import com.danov.udp.UDPUtils;
 import java.awt.AWTException;

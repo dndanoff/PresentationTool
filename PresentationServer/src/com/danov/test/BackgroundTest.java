@@ -1,6 +1,6 @@
 package com.danov.test;
 
-import com.danov.pointer.PointerFrame;
+import com.danov.common.pointer.PointerFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

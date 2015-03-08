@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.danov.pointer;
+package com.danov.common.pointer;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -64,6 +64,10 @@ public class PointerFrame extends JFrame {
         imagePanel.setPointX(realX);
         imagePanel.setPointY(realY);
         imagePanel.repaint();
+    }
+    
+    public void changeDotSize(int dotSize){
+        imagePanel.setDotSize(dotSize);
     }
     
     public void clearPointer(){

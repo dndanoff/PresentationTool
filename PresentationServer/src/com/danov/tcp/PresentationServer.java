@@ -5,14 +5,10 @@
  */
 package com.danov.tcp;
 
-import com.danov.pointer.PointerFrame;
-import com.danov.udp.impl.PresentationUDPServer;
 import java.awt.AWTException;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -94,12 +90,9 @@ public class PresentationServer implements Runnable{
             if (serverDispatcher.getClientsCount() < MAX_CLIENTS_COUNT) {
                 try {
                     Socket socket = server.accept();
-                    PresentationClient client = new PresentationClient(socket);
-                    ClientWorker clietnWorker = new ClientWorker(client, serverDispatcher,
-                            client.getConnection().getInetAddress().toString());
-                    client.setWorker(clietnWorker);
-                    clietnWorker.start();
-                    serverDispatcher.addClient(client);
+                    ClientWorker clientWorker = new ClientWorker(socket, serverDispatcher);
+                    serverDispatcher.addClient(clientWorker);
+                    clientWorker.start();
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 }

@@ -1,4 +1,4 @@
-package com.danov.tcp;
+package com.danov.common.robot;
 
 
 import java.awt.AWTException;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.danov.pointer;
+package com.danov.common.pointer;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,6 +21,9 @@ public class ImagePanel extends JPanel {
     private Image img;
     private int pointX;
     private int pointY;
+    
+    private int dotSize;
+    private String dotColor;
 
     public ImagePanel(String img) {
         this(new ImageIcon(img).getImage(), -1, -1);
@@ -57,13 +60,29 @@ public class ImagePanel extends JPanel {
         }
         if (pointX != -1 && pointY != -1) {
             g.setColor(color);
-            g.fillOval(pointX, pointY, 50, 50);
+            g.fillOval(pointX, pointY, dotSize, dotSize);
         }
     }
     
     public void removePointCoordinates(){
         setPointX(-1);
         setPointY(-1);
+    }
+    
+    public int getDotSize() {
+        return dotSize;
+    }
+
+    public void setDotSize(int dotSize) {
+        this.dotSize = dotSize;
+    }
+
+    public String getDotColor() {
+        return dotColor;
+    }
+
+    public void setDotColor(String dotColor) {
+        this.dotColor = dotColor;
     }
 
     public Image getImg() {

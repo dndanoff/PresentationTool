@@ -5,7 +5,8 @@
  */
 package com.danov.tcp;
 
-import com.danov.pointer.PointerFrame;
+import com.danov.common.robot.InputRobot;
+import com.danov.common.pointer.PointerFrame;
 import java.awt.AWTException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class ServerDispatcher extends Thread {
     private static final String POINT_PREFIX = "point:";
     private static final String START_POINTER = "pointer";
     private static final String CLEAR_POINTER = "clear";
+    private static final String SYSTEM_PREFIX = "SYSTEM:";
 
     private final JTextArea messagesTextArea;
     private final boolean dynamic;
@@ -32,7 +34,7 @@ public class ServerDispatcher extends Thread {
     private static InputRobot robot;
 
     private final List<String> messageQueue;
-    private final List<PresentationClient> clients;
+    private final List<ClientWorker> clients;
 
     private ServerDispatcher(Builder builder) throws AWTException {
         this.messagesTextArea = builder.messagesTextArea;
@@ -41,7 +43,7 @@ public class ServerDispatcher extends Thread {
         robot = new InputRobot();
 
         messageQueue = Collections.synchronizedList(new ArrayList<String>());
-        clients = Collections.synchronizedList(new ArrayList<PresentationClient>());
+        clients = Collections.synchronizedList(new ArrayList<ClientWorker>());
     }
 
     /**
@@ -74,7 +76,7 @@ public class ServerDispatcher extends Thread {
                 } else if (message.startsWith(POINT_PREFIX)) {
                     String valueMessage = message.replace(POINT_PREFIX, "");
                     String[] coordinates = valueMessage.split(",");
-                    pointerFrame.paintDot(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]),Integer.parseInt(coordinates[2]),Integer.parseInt(coordinates[3]));
+                    pointerFrame.paintDot(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), Integer.parseInt(coordinates[2]), Integer.parseInt(coordinates[3]));
 //                    printMessage("Client " + incoming.getAddress() + " drew point[" + coordinates[0] + "," + coordinates[1] + "]!");
                 } else if (START_POINTER.equals(message)) {
                     pointerFrame.getNewScreenCondition();
@@ -83,13 +85,10 @@ public class ServerDispatcher extends Thread {
                 } else if (CLEAR_POINTER.equals(message)) {
                     pointerFrame.clearPointer();
 //                    printMessage("Client " + incoming.getAddress() + " sent clear pointer command!");
+                } else if (message.startsWith(SYSTEM_PREFIX)) {
+                    System.out.println(message);
                 } else {
-                    if (messagesTextArea != null) {
-                        messagesTextArea.append(message + "\n");
-                    } else {
-                        printMessage(message);
-                    }
-
+                    printMessage(message);
                 }
             }
         } catch (InterruptedException ie) {
@@ -97,24 +96,12 @@ public class ServerDispatcher extends Thread {
         }
     }
 
-    public void printMessage(String message) {
-        if (messagesTextArea != null) {
-            messagesTextArea.append(new Date().toString() + ":" + message + "\n");
-        } else {
-            System.out.println(new Date().toString() + ":" + message);
-        }
-    }
-
-    public synchronized int getClientsCount() {
-        return clients.size();
-    }
-
     /**
      * Adds given client to the server's client list.
      *
      * @param aClient
      */
-    public synchronized void addClient(PresentationClient aClient) {
+    public synchronized void addClient(ClientWorker aClient) {
         clients.add(aClient);
     }
 
@@ -124,7 +111,7 @@ public class ServerDispatcher extends Thread {
      *
      * @param aClient.
      */
-    public synchronized void deleteClient(PresentationClient aClient) {
+    public synchronized void deleteClient(ClientWorker aClient) {
         int clientIndex = clients.indexOf(aClient);
         if (clientIndex != -1) {
             clients.remove(clientIndex);
@@ -140,17 +127,30 @@ public class ServerDispatcher extends Thread {
      *
      * @param aClient
      * @param message
+     * @param isSystem
      */
-    public synchronized void dispatchMessage(PresentationClient aClient, String message) {
+    public synchronized void dispatchMessage(ClientWorker aClient, String message, boolean isSystem) {
         Socket socket = aClient.getConnection();
-        String senderIP
-                = socket.getInetAddress().getHostAddress();
+        String senderIP = socket.getInetAddress().getHostAddress();
         String senderPort = "" + socket.getPort();
-        String aMessage = senderIP + ":" + senderPort
-                + " : " + message;
+        String aMessage = SYSTEM_PREFIX + senderIP + ":" + senderPort + " said: " + message;
         messageQueue.add(aMessage);
-        messageQueue.add(message);
+        if(!isSystem){
+            messageQueue.add(message);
+        }
         notify();
+    }
+
+    public synchronized int getClientsCount() {
+        return clients.size();
+    }
+
+    private void printMessage(String message) {
+        if (messagesTextArea != null) {
+            messagesTextArea.append(new Date().toString() + ":" + message + "\n");
+        } else {
+            System.out.println(new Date().toString() + ":" + message);
+        }
     }
 
     /**
@@ -167,10 +167,11 @@ public class ServerDispatcher extends Thread {
         messageQueue.remove(0);
         return message;
     }
-    
+
     public static class Builder {
 // Required parameters - here they are missing
 // Optional parameters - initialized to default values
+
         private JTextArea messagesTextArea = null;
         private boolean dynamic = false;
 
