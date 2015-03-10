@@ -9,7 +9,7 @@
     <string name="connectBtn">Connect!</string>
     <string name="pointer_activity">Pointer</string>
     <string name="connectionSuccess">Connection was successful</string>
-    <string name="keyboardSelection">Use buttons</string>
+    <string name="keyboardSelection">Use gesture</string>
     <string name="pointerSelection">Pointer</string>
     <string name="prev">Prev</string>
     <string name="next">Next</string>
@@ -18,4 +18,7 @@
     <string name="fault1">Server not running</string>
     <string name="fault2">No internet connection</string>
     <string name="fault3">Wrong port or address</string>
+    <string name="dotSize">Select dot size:</string>
+    <string name="dotColor">Select dot color:</string>
+    <string name="sendPref">Send</string>
 </resources>

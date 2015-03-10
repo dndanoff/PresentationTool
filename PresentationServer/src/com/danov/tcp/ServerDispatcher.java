@@ -24,6 +24,7 @@ public class ServerDispatcher extends Thread {
     private static final String NEXT = "next";
     private static final String PREV = "prev";
     private static final String POINT_PREFIX = "point:";
+    public static final String PREF_PREFIX = "pref:";
     private static final String START_POINTER = "pointer";
     private static final String CLEAR_POINTER = "clear";
     private static final String SYSTEM_PREFIX = "SYSTEM:";
@@ -77,14 +78,19 @@ public class ServerDispatcher extends Thread {
                     String valueMessage = message.replace(POINT_PREFIX, "");
                     String[] coordinates = valueMessage.split(",");
                     pointerFrame.paintDot(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), Integer.parseInt(coordinates[2]), Integer.parseInt(coordinates[3]));
-//                    printMessage("Client " + incoming.getAddress() + " drew point[" + coordinates[0] + "," + coordinates[1] + "]!");
-                } else if (START_POINTER.equals(message)) {
+                    printMessage(message);
+                } else if (message.startsWith(PREF_PREFIX)) {
+                    String valueMessage = message.replace(PREF_PREFIX, "");
+                    String[] preferences = valueMessage.split(",");
+                    pointerFrame.changeDotSize(Integer.parseInt(preferences[0]));
+                    pointerFrame.changeDotColor(Integer.parseInt(preferences[1]));
+                }else if (START_POINTER.equals(message)) {
                     pointerFrame.getNewScreenCondition();
                     pointerFrame.setVisible(!pointerFrame.isVisible());
-//                    printMessage("Client " + incoming.getAddress() + " sent pointer command!");
+                    printMessage(message);
                 } else if (CLEAR_POINTER.equals(message)) {
                     pointerFrame.clearPointer();
-//                    printMessage("Client " + incoming.getAddress() + " sent clear pointer command!");
+                    printMessage(message);
                 } else if (message.startsWith(SYSTEM_PREFIX)) {
                     System.out.println(message);
                 } else {

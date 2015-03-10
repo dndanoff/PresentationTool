@@ -8,7 +8,6 @@ package com.danov.udp;
 import com.danov.IPresentClient;
 import com.danov.udp.utils.UDPUtils;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -23,11 +22,6 @@ public class PresentationUDPClient extends UDPClient implements IPresentClient {
 
     private static final String ACK_REQUEST = "ack";
     private static final String ACK_RESPONSE = "rack";
-    private static final String NEXT = "next";
-    private static final String PREVIOUS = "prev";
-    private static final String POINT_PREFIX = "point:";
-    private static final String START_POINTER = "pointer";
-    private static final String CLEAR_POINTER = "clear";
 
     public PresentationUDPClient() throws UnknownHostException, SocketException {
         super();
@@ -66,7 +60,18 @@ public class PresentationUDPClient extends UDPClient implements IPresentClient {
         return false;
     }
 
-    public void sendPointCoordinates(int x, int y,int width, int height) {
+    public void sendPreferenceMessage(int dotSize, int dotColor) {
+        String message = PREF_PREFIX + dotSize + "," + dotColor;
+        try {
+            sendTextMessage(message);
+            System.out.println("Message " + message + " successfully sent");
+        } catch (IOException ex) {
+            Logger.getLogger(PresentationUDPClient.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Message " + message + " did not sent");
+        }
+    }
+
+    public void sendPointCoordinates(int x, int y, int width, int height) {
         String message = POINT_PREFIX + x + "," + y + "," + width + "," + height;
         try {
             sendTextMessage(message);

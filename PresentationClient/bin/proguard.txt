@@ -1,3 +1,6 @@
+# view res/layout/second.xml #generated:2
+-keep class android.support.v4.widget.DrawerLayout { <init>(...); }
+
 # view AndroidManifest.xml #generated:26
 -keep class com.danov.ActionTcpScreen { <init>(...); }
 
@@ -7,9 +10,15 @@
 # onClick res/layout/main.xml #generated:31
 -keepclassmembers class * { *** connectToServer(...); }
 
-# onClick res/layout/second.xml #generated:55
+# onClick res/layout/second.xml #generated:63
 -keepclassmembers class * { *** nextSlide(...); }
 
-# onClick res/layout/second.xml #generated:49
+# onClick res/layout/second.xml #generated:23
+-keepclassmembers class * { *** openPreferences(...); }
+
+# onClick res/layout/second.xml #generated:57
 -keepclassmembers class * { *** previousSlide(...); }
+
+# onClick res/layout/second.xml #generated:128
+-keepclassmembers class * { *** sendPreferences(...); }
 

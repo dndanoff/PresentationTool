@@ -1,74 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-    <!-- Header aligned to top -->
-    <RelativeLayout
-        android:id="@+id/header" 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center" >
-        <TextView android:id="@+id/connectionMessage"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="20sp"
-                  android:text="@string/connectionSuccess" />
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- The main content view -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/content_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+        <!-- Header aligned to top -->
+        <RelativeLayout android:id="@+id/header" 
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center" >
+            <TextView android:id="@+id/connectionMessage"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="20sp"
+                      android:text="@string/connectionSuccess" />
+            <ImageButton android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_alignParentRight="true"
+                         android:onClick="openPreferences"
+                         android:src="@android:drawable/ic_menu_more"/>
+        </RelativeLayout>
+        <!-- Footer aligned to bottom -->
+        <RelativeLayout android:id="@+id/footer" 
+                        android:layout_width="match_parent" 
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center" >
+            <LinearLayout android:orientation="vertical"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content">
+                    <CheckBox android:id="@+id/keyboardBox"
+                              android:layout_weight="1"
+                              android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:textSize="20sp"
+                              android:text="@string/keyboardSelection" />
+                    <CheckBox android:id="@+id/pointer"
+                              android:layout_weight="1"
+                              android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:textSize="20sp"
+                              android:text="@string/pointerSelection" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content">
+                    <Button android:id="@+id/prevBtn"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:text="@string/prev"
+                            android:onClick="previousSlide"/>
+                    <Button android:id="@+id/nextBtn"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:text="@string/next"
+                            android:onClick="nextSlide"/>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+        <!--    Scrollable Item below header and above footer -->
+        <ScrollView android:id="@+id/scrollableContents"
+                    android:layout_width="fill_parent" 
+                    android:layout_height="fill_parent" 
+                    android:layout_above="@id/footer" 
+                    android:background="#005" 
+                    android:layout_below="@id/header" > 
+        </ScrollView>
     </RelativeLayout>
-    <!-- Footer aligned to bottom -->
-    <RelativeLayout 
-        android:id="@+id/footer" 
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center" >
-        <LinearLayout android:orientation="vertical"
+    <!-- The navigation drawer -->
+    <LinearLayout android:orientation="vertical"
+                  android:gravity="center"
+                  android:id="@+id/left_drawer"
+                  android:layout_width="240dp"
+                  android:layout_height="match_parent"
+                  android:layout_gravity="left"
+                  android:divider="@android:color/transparent"
+                  android:dividerHeight="0dp"
+                  android:background="#111" >
+        <TextView android:id="@+id/serverLabel"
+                  android:textSize="20sp"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/dotSize" />
+        <SeekBar android:progress="50"
+                 android:id="@+id/seekBar"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:max="200"/>
+        <TextView android:id="@+id/portLabel"
+                  android:textSize="20sp"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/dotColor" />
+        <LinearLayout android:orientation="horizontal"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content">
-            <LinearLayout android:orientation="horizontal"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content">
-                <CheckBox
-                    android:id="@+id/keyboardBox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="@string/keyboardSelection" />
-                <CheckBox
-                    android:id="@+id/pointer"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="@string/pointerSelection" />
-            </LinearLayout>
-            <LinearLayout android:orientation="horizontal"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content">
-                <Button android:id="@+id/prevBtn"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:text="@string/prev"
-                        android:onClick="previousSlide"/>
-                <Button android:id="@+id/nextBtn"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:text="@string/next"
-                        android:onClick="nextSlide"/>
-            </LinearLayout>
+            <EditText android:id="@+id/redValue"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:inputType="number" 
+                      android:text="255"
+                      android:layout_width="0dp"/>
+            <EditText android:id="@+id/greenValue"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:inputType="number" 
+                      android:text="0"
+                      android:layout_width="0dp"/>
+            <EditText android:id="@+id/blueValue"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:inputType="number" 
+                      android:text="0"
+                      android:layout_width="0dp"/>
         </LinearLayout>
-    </RelativeLayout>
-    <!--    Scrollable Item below header and above footer -->
-    <ScrollView
-        android:id="@+id/scrollableContents"
-        android:layout_width="fill_parent" 
-        android:layout_height="fill_parent" 
-        android:layout_above="@id/footer" 
-        android:background="#005" 
-        android:layout_below="@id/header" > 
-    </ScrollView>
-</RelativeLayout>
+        <Button android:id="@+id/prefBtn"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sendPref"
+                android:onClick="sendPreferences"/>
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>
 

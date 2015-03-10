@@ -23,11 +23,12 @@ public class ImagePanel extends JPanel {
     private int pointY;
     
     private int dotSize;
-    private String dotColor;
+    private int dotColor;
 
     public ImagePanel(String img) {
         this(new ImageIcon(img).getImage(), -1, -1);
         this.dotSize = 50;
+        this.dotColor = 16711680;
     }
 
     public ImagePanel(Image img) {
@@ -55,7 +56,7 @@ public class ImagePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Color color = new Color(255,0,0,255);
+        Color color = new Color(dotColor);
         if (img != null) {
             g.drawImage(img, 0, 0, null);
         }
@@ -78,11 +79,11 @@ public class ImagePanel extends JPanel {
         this.dotSize = dotSize;
     }
 
-    public String getDotColor() {
+    public int getDotColor() {
         return dotColor;
     }
 
-    public void setDotColor(String dotColor) {
+    public void setDotColor(int dotColor) {
         this.dotColor = dotColor;
     }
 

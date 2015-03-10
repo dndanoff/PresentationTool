@@ -6,7 +6,6 @@
 package com.danov.tcp;
 
 import com.danov.IPresentClient;
-import com.danov.udp.PresentationUDPClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,11 +23,6 @@ import java.util.logging.Logger;
 public class PresentationClient implements IPresentClient {
 
     private static final String EXIT = "close";
-    private static final String NEXT = "next";
-    private static final String PREV = "prev";
-    private static final String POINT_PREFIX = "point:";
-    private static final String START_POINTER = "pointer";
-    private static final String CLEAR_POINTER = "clear";
 
     private final String serverAddress;
     private final Integer serverPort;
@@ -85,6 +79,12 @@ public class PresentationClient implements IPresentClient {
             Logger.getLogger(PresentationClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void sendPreferenceMessage(int dotSize, int dotColor){
+        String message = PREF_PREFIX + dotSize + "," + dotColor;
+        sendTextMessage(message);
+        System.out.println("Message " + message + " successfully sent");
+    }
 
     public boolean sendNextMessage() {
         System.out.println("Calling next...");
@@ -108,7 +108,7 @@ public class PresentationClient implements IPresentClient {
         try {
             PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            out.println(PREV);
+            out.println(PREVIOUS);
             out.flush();
         } catch (UnknownHostException ex) {
             Logger.getLogger(PresentationClient.class.getName()).log(Level.SEVERE, null, ex);

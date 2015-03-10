@@ -70,6 +70,10 @@ public class PointerFrame extends JFrame {
         imagePanel.setDotSize(dotSize);
     }
     
+    public void changeDotColor(int dotColor){
+        imagePanel.setDotColor(dotColor);
+    }
+    
     public void clearPointer(){
         imagePanel.removePointCoordinates();
         imagePanel.repaint();

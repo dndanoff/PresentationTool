@@ -5,19 +5,22 @@
  */
 package com.danov;
 
-import com.danov.listener.PointerListener;
-import com.danov.listener.AccelSensorListener;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import com.danov.listener.AccelSensorListener;
+import com.danov.listener.PointerListener;
 import com.danov.udp.PresentationUDPClient;
 
 /**
@@ -32,6 +35,10 @@ public class ActionScreen extends Activity {
     private PointerListener pointerListener;
 
     private IPresentClient client;
+    boolean connected;
+
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     /**
      * Called when the activity is first created.
@@ -43,14 +50,15 @@ public class ActionScreen extends Activity {
         super.onCreate(savedInstanceState);
         // Get the message from the intent
         Intent intent = getIntent();
-        boolean connected = intent.getBooleanExtra(ConnectScreen.CONNECTION_STATUS, false);
+        connected = intent.getBooleanExtra(ConnectScreen.CONNECTION_STATUS, false);
         if (connected) {
             client = (PresentationUDPClient) intent.getSerializableExtra(ConnectScreen.CLIENT_OBJECT);
 //            client.reconnect();
             setContentView(R.layout.second);
             prepareAccelerometer(client);
             preparePointerListener(client);
-            preparebuttonsLsitener();
+            prepareButtonsLsitener();
+            prepareDrawer();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } else {
 //            Create the text view programmatically
@@ -61,6 +69,46 @@ public class ActionScreen extends Activity {
 //            textView.setText("Conenction Failed!");
             setContentView(R.layout.error);
         }
+    }
+
+    private void prepareDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this, /* host Activity */
+                mDrawerLayout, /* DrawerLayout object */
+                android.R.drawable.ic_menu_agenda, /* nav drawer icon to replace 'Up' caret */
+                0, /* "open drawer" description */
+                0 /* "close drawer" description */) {
+
+            /**
+             * Called when a drawer has settled in a completely closed state.
+             */
+            @Override
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                CheckBox satView = (CheckBox) findViewById(R.id.keyboardBox);
+                if (satView.isChecked()) {
+                    if (listener != null) {
+                        senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_UI);
+                    }
+                }
+            }
+
+            /**
+             * Called when a drawer has settled in a completely open state.
+             */
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                CheckBox satView = (CheckBox) findViewById(R.id.keyboardBox);
+                if (satView.isChecked()) {
+                    if (listener != null) {
+                        senSensorManager.unregisterListener(listener);
+                    }
+                }
+            }
+        };
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     private void prepareAccelerometer(IPresentClient client) {
@@ -79,7 +127,7 @@ public class ActionScreen extends Activity {
         myView.setEnabled(false);
     }
 
-    private void preparebuttonsLsitener() {
+    private void prepareButtonsLsitener() {
         CheckBox satView = (CheckBox) findViewById(R.id.keyboardBox);
         satView.setOnClickListener(new OnClickListener() {
 
@@ -88,14 +136,14 @@ public class ActionScreen extends Activity {
                 CheckBox view = (CheckBox) v;
                 // TODO Auto-generated method stub
                 if (view.isChecked()) {
-                    ((Button) findViewById(R.id.nextBtn)).setEnabled(true);
-                    ((Button) findViewById(R.id.prevBtn)).setEnabled(true);
-                    senSensorManager.unregisterListener(listener);
-                    System.out.println("Checked");
-                } else {
                     ((Button) findViewById(R.id.nextBtn)).setEnabled(false);
                     ((Button) findViewById(R.id.prevBtn)).setEnabled(false);
                     senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+                    System.out.println("Checked");
+                } else {
+                    ((Button) findViewById(R.id.nextBtn)).setEnabled(true);
+                    ((Button) findViewById(R.id.prevBtn)).setEnabled(true);
+                    senSensorManager.unregisterListener(listener);
                     System.out.println("Un-Checked");
                 }
             }
@@ -122,10 +170,7 @@ public class ActionScreen extends Activity {
 
         if (senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             satView.setChecked(false);
-            ((Button) findViewById(R.id.nextBtn)).setEnabled(false);
-            ((Button) findViewById(R.id.prevBtn)).setEnabled(false);
         } else {
-            satView.setChecked(true);
             satView.setEnabled(false);
         }
     }
@@ -152,6 +197,23 @@ public class ActionScreen extends Activity {
     public void previousSlide(View view) {
         // Do something in response to button
         listener.prev();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        if (connected) {
+            mDrawerToggle.syncState();
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (connected) {
+            mDrawerToggle.onConfigurationChanged(newConfig);
+        }
     }
 
     @Override

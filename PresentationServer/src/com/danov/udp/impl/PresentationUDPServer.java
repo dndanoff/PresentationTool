@@ -26,6 +26,7 @@ public class PresentationUDPServer extends UDPServer {
     private static final String ACK_RESPONSE = "rack";
     private static final String NEXT = "next";
     private static final String PREVIOUS = "prev";
+    public static final String PREF_PREFIX = "pref:";
     private static final String POINT_PREFIX = "point:";
     private static final String START_POINTER = "pointer";
     private static final String CLEAR_POINTER = "clear";
@@ -84,6 +85,12 @@ public class PresentationUDPServer extends UDPServer {
             String[] coordinates = valueMessage.split(",");
             pointerFrame.paintDot(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), Integer.parseInt(coordinates[2]), Integer.parseInt(coordinates[3]));
             printMessage("Client " + incoming.getAddress() + " drew point[" + coordinates[0] + "," + coordinates[1] + "]!");
+        } else if (message.startsWith(PREF_PREFIX)) {
+            String valueMessage = message.replace(PREF_PREFIX, "");
+            String[] preferences = valueMessage.split(",");
+            pointerFrame.changeDotSize(Integer.parseInt(preferences[0]));
+            pointerFrame.changeDotColor(Integer.parseInt(preferences[1]));
+            printMessage("Client " + incoming.getAddress() + " set size " + preferences[0] + ",set color " + preferences[1] + "!");
         } else if (START_POINTER.equals(message)) {
             pointerFrame.getNewScreenCondition();
             pointerFrame.setVisible(!pointerFrame.isVisible());
@@ -114,6 +121,7 @@ public class PresentationUDPServer extends UDPServer {
 
     public static class Builder {
 // Required parameters
+
         private int port;
 // Optional parameters - initialized to default values
         private String address = null;
