@@ -27,8 +27,6 @@ public class ImagePanel extends JPanel {
 
     public ImagePanel(String img) {
         this(new ImageIcon(img).getImage(), -1, -1);
-        this.dotSize = 50;
-        this.dotColor = 16711680;
     }
 
     public ImagePanel(Image img) {
@@ -51,6 +49,8 @@ public class ImagePanel extends JPanel {
         setLayout(null);
         this.pointX = x;
         this.pointY = y;
+		this.dotSize = 50;
+        this.dotColor = 16711680;
     }
 
     @Override

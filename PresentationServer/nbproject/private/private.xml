@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/common/pointer/PointerFrame.java</file>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/tcp/PresentationServerScreen.java</file>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/common/pointer/ImagePanel.java</file>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/tcp/ServerDispatcher.java</file>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/tcp/ClientWorker.java</file>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/udp/impl/PresentationUDPClient.java</file>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/common/robot/InputRobot.java</file>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/udp/impl/PresentationUDPServer.java</file>
-            <file>file:/D:/GitProjects/PresentationTool/PresentationServer/src/com/danov/tcp/PresentationServer.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
