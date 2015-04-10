@@ -6,6 +6,7 @@
 package com.danov.tcp;
 
 import com.danov.IPresentClient;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -56,17 +57,20 @@ public class PresentationClient implements IPresentClient {
         return true;
     }
 
-    public void reconnect() {
+    public boolean reconnect() {
         try {
             InetAddress address = InetAddress.getByName("192.168.1.100");
             try {
                 connection = new Socket(serverAddress, serverPort);
             } catch (IOException ex) {
-                Logger.getLogger(PresentationClient.class.getName()).log(Level.SEVERE, null, ex);
+
+                return false;
             }
         } catch (UnknownHostException ex) {
             Logger.getLogger(PresentationClient.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
+        return true;
     }
 
     public void disconnect() {

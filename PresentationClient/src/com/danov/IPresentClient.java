@@ -34,7 +34,7 @@ public interface IPresentClient extends Serializable {
 
     public boolean sendPrevMessage();
 
-    public void reconnect();
+    public boolean reconnect();
 
     public void disconnect();
 }

@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:gravity="top"
+              android:gravity="center"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
->
+              android:layout_gravity="center">
+    
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingBottom="20dp"
+               android:id="@+id/logo"
+               android:layout_gravity="center_horizontal"
+               android:src="@drawable/logo" />
+    
     <TextView android:id="@+id/serverLabel"
               android:textSize="20sp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="@string/serverLabel" />
-    <EditText
-        android:id="@+id/serverName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/serverName"
-        android:inputType="text" />
+    
+    <EditText android:id="@+id/serverName"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="@string/serverName"
+              android:inputType="text" />
+    
     <TextView android:id="@+id/portLabel"
               android:textSize="20sp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="@string/portLabel" />
-    <EditText
-        android:id="@+id/serverPort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/serverPort"
-        android:text="@string/defaultPort"
-        android:inputType="number" />
+    
+    <EditText android:id="@+id/serverPort"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="@string/serverPort"
+              android:text="@string/defaultPort"
+              android:inputType="number" />
+    
     <Button android:id="@+id/connectBtn"
             android:textSize="20sp"
             android:layout_width="match_parent"
+            android:background="@drawable/action_bar"
             android:layout_height="wrap_content"
             android:text="@string/connectBtn"
             android:onClick="connectToServer"/>
+    
 </LinearLayout>
 

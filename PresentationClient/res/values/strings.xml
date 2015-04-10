@@ -2,14 +2,14 @@
 <resources>
     <string name="app_name">PresentationTool</string>
     <string name="serverLabel">Server Address</string>
-    <string name="serverName">localhost</string>
+    <string name="serverName">Server IP Address</string>
     <string name="portLabel">Port Number</string>
     <string name="serverPort">8080</string>
     <string name="defaultPort">1991</string>
-    <string name="connectBtn">Connect!</string>
+    <string name="connectBtn">Connect</string>
     <string name="pointer_activity">Pointer</string>
     <string name="connectionSuccess">Connection was successful</string>
-    <string name="keyboardSelection">Use gesture</string>
+    <string name="keyboardSelection">Gesture</string>
     <string name="pointerSelection">Pointer</string>
     <string name="prev">Prev</string>
     <string name="next">Next</string>
@@ -20,5 +20,5 @@
     <string name="fault3">Wrong port or address</string>
     <string name="dotSize">Select dot size:</string>
     <string name="dotColor">Select dot color:</string>
-    <string name="sendPref">Send</string>
+    <string name="sendPref">Apply</string>
 </resources>

@@ -9,16 +9,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import com.danov.listener.AccelSensorListener;
 import com.danov.listener.PointerListener;
 import com.danov.udp.PresentationUDPClient;
@@ -27,7 +33,7 @@ import com.danov.udp.PresentationUDPClient;
  *
  * @author x
  */
-public class ActionScreen extends Activity {
+public class ActionScreen extends ActionBarActivity{
 
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
@@ -71,14 +77,32 @@ public class ActionScreen extends Activity {
         }
     }
 
+    public void sendPreferences(View view) {
+        // Do something in response to button
+        int red = Integer.parseInt(((EditText) findViewById(R.id.redValue)).getText().toString());
+        int green = Integer.parseInt(((EditText) findViewById(R.id.greenValue)).getText().toString());
+        int blue = Integer.parseInt(((EditText) findViewById(R.id.blueValue)).getText().toString());
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        int rgb = Color.rgb(red, green, blue);
+        client.sendPreferenceMessage(seekBar.getProgress(), rgb);
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
+    }
+
+    public void openPreferences(View view) {
+        // Do something in response to button
+        mDrawerLayout.openDrawer(Gravity.LEFT);
+    }
+
     private void prepareDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, /* host Activity */
                 mDrawerLayout, /* DrawerLayout object */
-                android.R.drawable.ic_menu_agenda, /* nav drawer icon to replace 'Up' caret */
+                R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
                 0, /* "open drawer" description */
-                0 /* "close drawer" description */) {
+               0 /* "close drawer" description */) {
 
             /**
              * Called when a drawer has settled in a completely closed state.
@@ -86,12 +110,6 @@ public class ActionScreen extends Activity {
             @Override
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                CheckBox satView = (CheckBox) findViewById(R.id.keyboardBox);
-                if (satView.isChecked()) {
-                    if (listener != null) {
-                        senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_UI);
-                    }
-                }
             }
 
             /**
@@ -100,24 +118,30 @@ public class ActionScreen extends Activity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                CheckBox satView = (CheckBox) findViewById(R.id.keyboardBox);
-                if (satView.isChecked()) {
-                    if (listener != null) {
-                        senSensorManager.unregisterListener(listener);
-                    }
-                }
+                invalidateOptionsMenu();
             }
         };
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return true;
     }
 
     private void prepareAccelerometer(IPresentClient client) {
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         listener = new AccelSensorListener(client);
-        if (senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
-            senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_UI);
-        }
+//        if (senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+//            senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_UI);
+//        }
     }
 
     private void preparePointerListener(IPresentClient client) {
@@ -227,7 +251,8 @@ public class ActionScreen extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (listener != null) {
+        CheckBox gesture = (CheckBox) findViewById(R.id.keyboardBox);
+        if (listener != null && gesture != null && gesture.isChecked()) {
             senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }

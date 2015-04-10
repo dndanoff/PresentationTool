@@ -15,6 +15,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:gravity="center" >
+            <!--
             <TextView android:id="@+id/connectionMessage"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -25,6 +26,7 @@
                          android:layout_alignParentRight="true"
                          android:onClick="openPreferences"
                          android:src="@android:drawable/ic_menu_more"/>
+            -->
         </RelativeLayout>
         <!-- Footer aligned to bottom -->
         <RelativeLayout android:id="@+id/footer" 
@@ -34,23 +36,33 @@
                         android:gravity="center" >
             <LinearLayout android:orientation="vertical"
                           android:layout_width="match_parent"
-                          android:layout_height="wrap_content">
-                <LinearLayout android:orientation="horizontal"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content">
-                    <CheckBox android:id="@+id/keyboardBox"
-                              android:layout_weight="1"
-                              android:layout_width="0dp"
-                              android:layout_height="wrap_content"
-                              android:textSize="20sp"
-                              android:text="@string/keyboardSelection" />
-                    <CheckBox android:id="@+id/pointer"
-                              android:layout_weight="1"
-                              android:layout_width="0dp"
-                              android:layout_height="wrap_content"
-                              android:textSize="20sp"
-                              android:text="@string/pointerSelection" />
+                          android:layout_height="wrap_content"
+                          android:background="#c5c5c5">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent">
+                    <CheckBox
+                        android:id="@+id/keyboardBox"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:background="#c5c5c5"
+                        android:text="@string/keyboardSelection" />
+
+                    <CheckBox
+                        android:id="@+id/pointer"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:background="#c5c5c5"
+                        android:text="@string/pointerSelection" />
                 </LinearLayout>
+                
                 <LinearLayout android:orientation="horizontal"
                               android:layout_width="match_parent"
                               android:layout_height="wrap_content">
@@ -58,12 +70,14 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_width="0dp"
+                            android:background="@drawable/action_bar"
                             android:text="@string/prev"
                             android:onClick="previousSlide"/>
                     <Button android:id="@+id/nextBtn"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_width="0dp"
+                            android:background="@drawable/action_bar"
                             android:text="@string/next"
                             android:onClick="nextSlide"/>
                 </LinearLayout>
@@ -74,8 +88,10 @@
                     android:layout_width="fill_parent" 
                     android:layout_height="fill_parent" 
                     android:layout_above="@id/footer" 
-                    android:background="#005" 
-                    android:layout_below="@id/header" > 
+                    android:background="#c5c5c5"
+                    android:layout_below="@id/header"
+                    android:foreground="@drawable/touch"
+                    android:fillViewport="false"> 
         </ScrollView>
     </RelativeLayout>
     <!-- The navigation drawer -->
@@ -85,27 +101,32 @@
                   android:layout_width="240dp"
                   android:layout_height="match_parent"
                   android:layout_gravity="left"
-                  android:divider="@android:color/transparent"
-                  android:dividerHeight="0dp"
-                  android:background="#111" >
+                  android:background="#c5c5c5"
+                  android:dividerHeight="0dp">
+        
         <TextView android:id="@+id/serverLabel"
                   android:textSize="20sp"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:text="@string/dotSize" />
+        
         <SeekBar android:progress="50"
                  android:id="@+id/seekBar"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:max="200"/>
+        
         <TextView android:id="@+id/portLabel"
                   android:textSize="20sp"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:text="@string/dotColor" />
+        
         <LinearLayout android:orientation="horizontal"
                       android:layout_width="match_parent"
-                      android:layout_height="wrap_content">
+                      android:layout_height="wrap_content"
+                      android:gravity="center_horizontal">
+            
             <EditText android:id="@+id/redValue"
                       android:layout_height="wrap_content"
                       android:layout_weight="1"
@@ -125,8 +146,10 @@
                       android:text="0"
                       android:layout_width="0dp"/>
         </LinearLayout>
+        
         <Button android:id="@+id/prefBtn"
                 android:textSize="20sp"
+                android:background="@drawable/action_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sendPref"

@@ -7,6 +7,7 @@ package com.danov.udp;
 
 import com.danov.IPresentClient;
 import com.danov.udp.utils.UDPUtils;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
@@ -131,8 +132,9 @@ public class PresentationUDPClient extends UDPClient implements IPresentClient {
         getSocket().send(getSendPacket());
     }
 
-    public void reconnect() {
+    public boolean reconnect() {
         System.out.println("No need to reconect");
+        return true;
     }
 
     public void disconnect() {

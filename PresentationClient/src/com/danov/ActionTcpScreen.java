@@ -5,17 +5,20 @@
  */
 package com.danov;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -23,6 +26,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.danov.listener.AccelSensorListener;
 import com.danov.listener.PointerListener;
 import com.danov.tcp.PresentationClient;
@@ -31,17 +37,17 @@ import com.danov.tcp.PresentationClient;
  *
  * @author x
  */
-public class ActionTcpScreen extends Activity {
+public class ActionTcpScreen extends ActionBarActivity {
 
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
     private AccelSensorListener listener;
     private PointerListener pointerListener;
-
     private IPresentClient client;
     boolean connected;
 
     private DrawerLayout mDrawerLayout;
+    private View mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
     /**
@@ -57,8 +63,10 @@ public class ActionTcpScreen extends Activity {
         connected = intent.getBooleanExtra(ConnectScreen.CONNECTION_STATUS, false);
         if (connected) {
             client = (PresentationClient) intent.getSerializableExtra(ConnectScreen.CLIENT_OBJECT);
-            client.reconnect();
+//          Reconnect via worker
+            new ActionTcpScreen.ConnectToServerTask().execute();
             setContentView(R.layout.second);
+            Toast.makeText(getApplicationContext(), "Connection was successful.", Toast.LENGTH_LONG).show();
             prepareAccelerometer(client);
             preparePointerListener(client);
             prepareButtonsLsitener();
@@ -99,12 +107,15 @@ public class ActionTcpScreen extends Activity {
 
     private void prepareDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, /* host Activity */
                 mDrawerLayout, /* DrawerLayout object */
-                android.R.drawable.ic_menu_agenda, /* nav drawer icon to replace 'Up' caret */
+                R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
                 0, /* "open drawer" description */
-                0 /* "close drawer" description */) {
+               0 /* "close drawer" description */) {
 
             /**
              * Called when a drawer has settled in a completely closed state.
@@ -120,18 +131,30 @@ public class ActionTcpScreen extends Activity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
             }
         };
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return true;
     }
 
     private void prepareAccelerometer(IPresentClient client) {
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         listener = new AccelSensorListener(client);
-        if (senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
-            senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_UI);
-        }
+//        if (senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+//            senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_UI);
+//        }
     }
 
     private void preparePointerListener(IPresentClient client) {
@@ -142,8 +165,8 @@ public class ActionTcpScreen extends Activity {
     }
 
     private void prepareButtonsLsitener() {
-        CheckBox satView = (CheckBox) findViewById(R.id.keyboardBox);
-        satView.setOnClickListener(new OnClickListener() {
+        CheckBox gesture = (CheckBox) findViewById(R.id.keyboardBox);
+        gesture.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -183,9 +206,9 @@ public class ActionTcpScreen extends Activity {
         });
 
         if (senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
-            satView.setChecked(false);
+            gesture.setChecked(false);
         } else {
-            satView.setEnabled(false);
+            gesture.setEnabled(false);
         }
     }
 
@@ -223,6 +246,7 @@ public class ActionTcpScreen extends Activity {
     public void nextSlide(View view) {
         // Do something in response to button
         listener.next();
+//        new ActionTcpScreen.NextTask().execute();
     }
 
     public void previousSlide(View view) {
@@ -241,8 +265,36 @@ public class ActionTcpScreen extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (listener != null) {
+        CheckBox gesture = (CheckBox) findViewById(R.id.keyboardBox);
+        if (listener != null && gesture != null && gesture.isChecked()) {
             senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
+
+    private class ConnectToServerTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... arg) {
+            return client.reconnect();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+        }
+    }
+    
+        private class NextTask extends AsyncTask<Void, Void, Boolean> {
+
+            @Override
+            protected Boolean doInBackground(Void... arg) {
+                listener.next();
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+
+            }
+        }
 }
